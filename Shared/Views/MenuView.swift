@@ -10,6 +10,7 @@ import SwiftUI
 var imageSize:CGFloat = 80
 
 struct ItemRow : View {
+    
     var item:MenuItem
     
     init(_ item:MenuItem) {
@@ -17,16 +18,21 @@ struct ItemRow : View {
     }
     
     var body: some View {
-        HStack {
-            Image(item.imageName).resizable()
-                .frame(width: imageSize, height: imageSize)
-                .aspectRatio(contentMode: .fit)
-            VStack {
-                Text(item.title).bold()
-                Text(item.description).italic()
-                Text("\(item.size) / \(item.abv)% abv")
-                    .multilineTextAlignment(.leading)
+        VStack {
+            HStack {
+                Image(item.imageName).resizable()
+                    .frame(width: imageSize, height: imageSize)
+                    .aspectRatio(contentMode: .fit)
+                VStack {
+                    Text(item.title).bold()
+                    Text(item.description).italic()
+                    Text("\(item.size) / \(item.abv)% abv")
+                        .multilineTextAlignment(.leading)
+                }
             }
+            Button("Add to Cart") {
+                Order.currentOrder.items.append(OrderItem(item: item))
+            }.buttonStyle(BorderlessButtonStyle())
         }
     }
 }
@@ -42,7 +48,7 @@ struct MenuSectionHeader: View {
     }
 }
 
-struct Menu: View {
+struct MenuView: View {
     var body: some View {
         VStack {
             Section(header: MenuSectionHeader()) {
@@ -54,8 +60,8 @@ struct Menu: View {
     }
 }
 
-struct Menu_Previews: PreviewProvider {
+struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
-        Menu()
+        MenuView()
     }
 }

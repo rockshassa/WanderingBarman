@@ -8,19 +8,17 @@
 import Foundation
 
 struct Order {
+    static var currentOrder = Order()
     var items = [OrderItem]()
 }
 
-struct OrderItem {
+struct OrderItem: Identifiable {
     let item:MenuItem
     var quantity:Int = 0
+    var id: ObjectIdentifier = ObjectIdentifier(OrderItem.Type.self)
 }
 
-struct Cart {
-    static var currentOrder = Order()
-}
-
-struct MenuItem: Identifiable {
+struct MenuItem: Identifiable, Hashable {
     var id: ObjectIdentifier = ObjectIdentifier(MenuItem.Type.self)
     
     static var dummyItems:[MenuItem] {
@@ -30,7 +28,16 @@ struct MenuItem: Identifiable {
     var title = "La Niña Margarita"
     var price:Decimal = 5.00
     var description = "An elevated botanical Margarita with marigold & kaffir lime"
-    var size:String = "3.4oz"
-    var abv:String = "18"
+    var size = "3.4oz"
+    var abv = "18"
     var imageName = "la_nina"
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+        hasher.combine(price)
+        hasher.combine(description)
+        hasher.combine(size)
+        hasher.combine(abv)
+        hasher.combine(imageName)
+    }
 }
