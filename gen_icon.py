@@ -70,9 +70,9 @@ def findFiles(projectPath):
 #create and write image based on metadata
 def makeImage(source_img,asset):
     try:
-        pixels = asset.size*asset.scale
+        pixels = int(asset.size*asset.scale)
         size = (pixels,pixels)
-        source_img.resize((pixels,pixels))
+        source_img = source_img.resize(size)
         source_img.save(asset.filename, "PNG")
         print 'created image for size ' + str(size)
     except IOError:
