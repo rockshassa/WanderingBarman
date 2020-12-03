@@ -7,21 +7,7 @@
 
 import SwiftUI
 
-struct MenuItem: Identifiable {
-    var id: ObjectIdentifier = ObjectIdentifier(MenuItem.Type.self)
-    
-    static var dummyItems:[MenuItem] {
-        return [MenuItem(),MenuItem(),MenuItem(),MenuItem(),MenuItem(),MenuItem(),MenuItem(),MenuItem()]
-    }
-    var title = "La Niña Margarita"
-    var price:Decimal = 5.00
-    var description = "An elevated botanical Margarita with marigold & kaffir lime"
-    var size:String = "3.4oz"
-    var abv:String = "18"
-    var imageName = "la_nina"
-}
-
-var imageSize:CGFloat = 120
+var imageSize:CGFloat = 80
 
 struct ItemRow : View {
     var item:MenuItem
@@ -29,6 +15,7 @@ struct ItemRow : View {
     init(_ item:MenuItem) {
         self.item = item
     }
+    
     var body: some View {
         HStack {
             Image(item.imageName).resizable()

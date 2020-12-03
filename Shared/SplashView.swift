@@ -11,13 +11,23 @@ struct SplashView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("FOXHOLE\ndrinks to you within the hour\n5-10pm daily\n$30 minimum")
+            Text("FOXHOLE")
+                .multilineTextAlignment(.center)
+                .font(.headline)
+            
+            Text("drinks to you within the hour\n5-10pm daily\n$30 minimum").italic()
                 .multilineTextAlignment(.center)
                 .padding()
+                .font(.subheadline)
+                
             Spacer()
-            Image("splash_bottom")
+            Button("Enter") {
+                
+            }
+            Spacer()
         }
     }
+    
 }
 
 struct SplashView_Previews: PreviewProvider {
