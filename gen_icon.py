@@ -132,7 +132,7 @@ def main():
 
     #grab our command line arguments
     path = os.getcwd()
-    imgName = "Shared/logo.png"
+    imgName = "logo.png"
     fileName = os.path.splitext(imgName)[0]
 
     #find our targets (iphone, ipad, watch, etc.)
