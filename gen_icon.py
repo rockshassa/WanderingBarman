@@ -72,7 +72,7 @@ def makeImage(source_img,asset):
     try:
         pixels = asset.size*asset.scale
         size = (pixels,pixels)
-        source_img.thumbnail(size)
+        source_img.resize((pixels,pixels))
         source_img.save(asset.filename, "PNG")
         print 'created image for size ' + str(size)
     except IOError:
