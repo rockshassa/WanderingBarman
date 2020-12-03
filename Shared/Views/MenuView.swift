@@ -31,7 +31,7 @@ struct ItemRow : View {
                 }
             }
             Button("Add to Cart") {
-                Order.currentOrder.items.append(OrderItem(item: item))
+                Order.currentOrder.items.append(OrderItem(item))
             }.buttonStyle(BorderlessButtonStyle())
         }
     }

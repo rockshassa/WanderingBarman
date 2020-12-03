@@ -7,15 +7,18 @@
 
 import Foundation
 
-struct Order {
+class Order: ObservableObject {
     static var currentOrder = Order()
     var items = [OrderItem]()
 }
 
-struct OrderItem: Identifiable {
+class OrderItem: Identifiable, ObservableObject {
     let item:MenuItem
     var quantity:Int = 0
     var id: ObjectIdentifier = ObjectIdentifier(OrderItem.Type.self)
+    init(_ item:MenuItem) {
+        self.item = item
+    }
 }
 
 struct MenuItem: Identifiable, Hashable {
