@@ -8,6 +8,11 @@
 import Foundation
 import Combine
 
+func randomString(length: Int = 16) -> String {
+  let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  return String((0..<length).map{ _ in letters.randomElement()! })
+}
+
 class Order: ObservableObject {
     static var currentOrder = Order()
     
@@ -20,6 +25,8 @@ class Order: ObservableObject {
     }
     
     public private(set) var objectWillChange = PassthroughSubject<Void,Never>()
+    
+    let id = randomString()
     
     @Published var items = [MenuItem]()
     
@@ -43,5 +50,16 @@ class Order: ObservableObject {
         DispatchQueue.main.async {
             self.objectWillChange.send()
         }
+    }
+    
+    var orderText:String {
+        var text = "Order ID: \(id)"
+        for item in items {
+            text.append("\n")
+            text.append("\(item.title) x \(item.orderQty)")
+        }
+        text.append("\n")
+        text.append("TOTAL: \(totalString!)")
+        return text
     }
 }

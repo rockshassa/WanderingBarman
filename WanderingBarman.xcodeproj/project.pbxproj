@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		015DA8C025799BDC00D39237 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015DA8BF25799BDC00D39237 /* ProfileView.swift */; };
 		019484FA2579310900293B67 /* WanderingBarmanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019484E72579310600293B67 /* WanderingBarmanApp.swift */; };
 		019484FB2579310900293B67 /* WanderingBarmanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019484E72579310600293B67 /* WanderingBarmanApp.swift */; };
 		019484FC2579310900293B67 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019484E82579310600293B67 /* SplashView.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		015DA8BF25799BDC00D39237 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		019484E72579310600293B67 /* WanderingBarmanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WanderingBarmanApp.swift; sourceTree = "<group>"; };
 		019484E82579310600293B67 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		019484E92579310900293B67 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				019484E82579310600293B67 /* SplashView.swift */,
 				0194850F2579387C00293B67 /* MenuView.swift */,
 				0196F96B257962F400F83271 /* CartView.swift */,
+				015DA8BF25799BDC00D39237 /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				015DA8C025799BDC00D39237 /* ProfileView.swift in Sources */,
 				01F4817F25797F1B003F73AE /* Menu.swift in Sources */,
 				0196F96C257962F400F83271 /* CartView.swift in Sources */,
 				019485102579387C00293B67 /* MenuView.swift in Sources */,

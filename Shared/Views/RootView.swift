@@ -33,15 +33,18 @@ struct RootTabView: View {
                     }
                 }
 
+                let itemCount = self.order.items.count
+                    
                 // Badge View
                 ZStack {
                   Circle()
                     .foregroundColor(.red)
 
-                    Text("\(Order.currentOrder.items.count)")
+                    Text("\(itemCount)")
                     .foregroundColor(.white)
                     .font(Font.system(size: 12))
                 }
+                .opacity(itemCount > 0 ? 1 : 0)
                 .frame(width: 15, height: 15)
                 .offset(x: ( ( 2 * self.badgePosition) - 0.95 ) * ( geometry.size.width / ( 2 * self.tabsCount ) ) + 2, y: -30)
               }

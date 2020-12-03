@@ -35,7 +35,7 @@ struct MenuItem: Identifiable, Hashable {
     var size = "3.4oz"
     var abv = "18"
     var imageName = "la_nina"
-    var orderQty = 0
+    var orderQty = 1
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(title)
