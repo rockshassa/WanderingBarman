@@ -7,33 +7,6 @@
 
 import SwiftUI
 
-struct RootTabView: View {
-    var body: some View {
-        TabView {
-            MenuView().tabItem {
-                Image(systemName: "list.dash")
-                Text("Menu")
-            }
-            CartView().tabItem {
-                Image(systemName: "cart.fill")
-                Text("Cart")
-            }
-        }
-    }
-}
-
-struct RootView: View {
-    @State var splashDismissed = true//false
-    
-    var body: some View {
-        if !splashDismissed {
-            SplashView(self)
-        } else {
-            RootTabView()
-        }
-    }
-}
-
 struct SplashView: View {
     var delegate:RootView?
     init(_ delegate:RootView? = nil) {
@@ -61,14 +34,9 @@ struct SplashView: View {
     
 }
 
+
 struct SplashView_Previews: PreviewProvider {
     static var previews: some View {
         SplashView()
-    }
-}
-
-struct RootTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        RootTabView()
     }
 }

@@ -7,15 +7,44 @@
 
 import SwiftUI
 
-struct CartView: View {
+struct CartItemRow: View {
+    var item:MenuItem
     
-    @State var order = Order.currentOrder
-    
+    init(_ item:MenuItem) {
+        self.item = item
+    }
     var body: some View {
         HStack {
+            Image(item.imageName).resizable()
+                .frame(width: imageSize, height: imageSize)
+                .aspectRatio(contentMode: .fit)
+            VStack {
+                Text("\(item.title)")
+                    .font(.callout)
+                Text("\(item.priceString!) x \(item.orderQty)")
+            }
+        }
+    }
+}
+
+struct CartView: View {
+    
+    @ObservedObject var order:Order
+    
+    var cartDelegate:Any?
+    
+    init(order:Order) {
+        self.order = order
+    }
+    
+    var body: some View {
+        VStack {
             Text("Your Cart")
             List(order.items) { orderItem in
-                ItemRow(orderItem.item)
+                CartItemRow(orderItem)
+            }
+            Button("Order \(order.totalString ?? "")") {
+                
             }
         }
     }
@@ -23,6 +52,6 @@ struct CartView: View {
 
 struct CartView_Previews: PreviewProvider {
     static var previews: some View {
-        CartView()
+        CartView(order: Order.dummyOrder)
     }
 }
