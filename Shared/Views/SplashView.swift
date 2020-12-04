@@ -17,7 +17,7 @@ struct SplashView: View {
             Spacer()
             Text("FOXHOLE")
                 .multilineTextAlignment(.center)
-                .font(.headline)
+                .font(.largeTitle)
             
             Text("drinks to you within the hour\n5-10pm daily\n$30 minimum").italic()
                 .multilineTextAlignment(.center)

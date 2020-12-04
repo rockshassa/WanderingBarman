@@ -8,30 +8,48 @@
 import Foundation
 import Combine
 
-func randomString(length: Int = 16) -> String {
-  let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-  return String((0..<length).map{ _ in letters.randomElement()! })
-}
-
-class Order: ObservableObject {
+class Order: NSObject, ObservableObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
+    
+    var id = randomString()
+    
+    @Published var items = [MenuItem]()
+    
+    override init() {
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        self.id = coder.decodeObject(forKey: "id") as! String
+        self.items = coder.decodeArrayOfObjects(ofClass: MenuItem.self, forKey: "items")!
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(id, forKey: "id")
+        coder.encode(items, forKey: "items")
+    }
+    
     static var currentOrder = Order()
     
     static var dummyOrder:Order {
         let o = Order()
-        var item = MenuItem()
+        let item = MenuItem()
         item.orderQty = 1
         o.items = [item]
         return o
     }
     
     public private(set) var objectWillChange = PassthroughSubject<Void,Never>()
+}
+
+extension Order {
     
-    let id = randomString()
-    
-    @Published var items = [MenuItem]()
-    
-    var total:Decimal {
-        return items.map({$0.price}).reduce(0,+)
+    var total:NSDecimalNumber {
+        var tot = 0 as NSDecimalNumber
+        for item in items {
+            tot = tot.adding(item.price)
+        }
+        return tot
     }
     
     var totalString:String? {
@@ -53,13 +71,40 @@ class Order: ObservableObject {
     }
     
     var orderText:String {
-        var text = "Order ID: \(id)"
+        
+        let account = Account.current
+        
+        var text = ""
+        
+        //Deliver to
+        text.append("Deliver ASAP to:")
+        text.append("\n")
+        text.append(account.fullName)
+        text.append("\n")
+        text.append("\(account.addressStreet) \(account.addressStreet2)")
+        text.append("\n")
+        text.append("\(account.addressCity), \(account.addressState) \(account.addressZip)")
+        text.append("\n")
+        text.append(account.phone)
+        text.append("\n")
+        
+        //Items
         for item in items {
             text.append("\n")
             text.append("\(item.title) x \(item.orderQty)")
         }
         text.append("\n")
         text.append("TOTAL: \(totalString!)")
+        
+        //Order ID
+        text.append("\n")
+        text.append("Order ID: \(id)")
+        
         return text
     }
+}
+
+func randomString(length: Int = 16) -> String {
+  let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  return String((0..<length).map{ _ in letters.randomElement()! })
 }

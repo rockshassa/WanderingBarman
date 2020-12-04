@@ -16,7 +16,7 @@ struct RootTabView: View {
     }
     
     private var badgePosition: CGFloat = 2
-    private var tabsCount: CGFloat = 2
+    private var tabsCount: CGFloat = 3
     
     var body: some View {
             GeometryReader { geometry in
@@ -30,6 +30,10 @@ struct RootTabView: View {
                     CartView(order:Order.currentOrder).tabItem {
                         Image(systemName: "cart.fill")
                         Text("Cart")
+                    }
+                    AccountView(Account.current).tabItem {
+                        Image(systemName: "person.fill")
+                        Text("Account")
                     }
                 }
 
@@ -53,7 +57,7 @@ struct RootTabView: View {
 }
 
 struct RootView: View {
-    @State var splashDismissed = true//false
+    @State var splashDismissed = false
     
     var body: some View {
         if !splashDismissed {

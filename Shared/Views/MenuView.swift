@@ -25,7 +25,7 @@ struct ItemRow : View {
                     .aspectRatio(contentMode: .fit)
                 VStack {
                     Text(item.title).bold()
-                    Text(item.description).italic()
+                    Text(item.itemDescription).italic()
                     Text("\(item.size) / \(item.abv)% abv")
                         .multilineTextAlignment(.leading)
                 }

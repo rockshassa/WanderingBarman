@@ -8,26 +8,6 @@
 import SwiftUI
 import MessageUI
 
-struct CartItemRow: View {
-    var item:MenuItem
-    
-    init(_ item:MenuItem) {
-        self.item = item
-    }
-    var body: some View {
-        HStack {
-            Image(item.imageName).resizable()
-                .frame(width: imageSize, height: imageSize)
-                .aspectRatio(contentMode: .fit)
-            VStack {
-                Text("\(item.title)")
-                    .font(.callout)
-                Text("\(item.priceString!) x \(item.orderQty)")
-            }
-        }
-    }
-}
-
 struct CartView: View {
 
     private let mailComposeDelegate = MailComposerDelegate()
@@ -44,13 +24,41 @@ struct CartView: View {
     var body: some View {
         VStack {
             Text("Your Cart")
-            List(order.items) { orderItem in
-                CartItemRow(orderItem)
+            List {
+                ForEach(order.items, id: \.self) { orderItem in
+                    CartItemRow(orderItem)
+                }
+                .onDelete(perform: delete)
             }
             Button("Order \(order.totalString ?? "")") {
                 presentMailCompose()
             }
             .padding(.bottom)
+        }
+    }
+    
+    func delete(at offsets: IndexSet) {
+        order.items.remove(atOffsets: offsets)
+        order.push()
+    }
+}
+
+struct CartItemRow: View {
+    var item:MenuItem
+    
+    init(_ item:MenuItem) {
+        self.item = item
+    }
+    var body: some View {
+        HStack {
+            Image(item.imageName).resizable()
+                .frame(width: imageSize, height: imageSize)
+                .aspectRatio(contentMode: .fit)
+            VStack {
+                Text("\(item.title)")
+                    .font(.callout)
+                Text("\(item.priceString!) x \(item.orderQty)")
+            }
         }
     }
 }
@@ -80,6 +88,8 @@ extension CartView {
         let composeVC = MFMailComposeViewController()
         composeVC.mailComposeDelegate = mailComposeDelegate
         composeVC.setMessageBody(order.orderText, isHTML: false)
+        composeVC.setToRecipients(["orders@wanderingbarman.com"])
+        composeVC.setSubject("FOXHOLE Order \(order.id)")
 
         vc?.present(composeVC, animated: true)
     }
