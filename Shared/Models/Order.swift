@@ -47,7 +47,7 @@ extension Order {
     var total:NSDecimalNumber {
         var tot = 0 as NSDecimalNumber
         for item in items {
-            tot = tot.adding(item.price)
+            tot = tot.adding(NSDecimalNumber(decimal: item.price))
         }
         return tot
     }
