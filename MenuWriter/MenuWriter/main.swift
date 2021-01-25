@@ -7,5 +7,22 @@
 
 import Foundation
 
-let m = MenuItem()
+let menu:Menu = {
+    let m = Menu()
+    m.items = [MenuItem()]
+    return m
+}()
 
+func writeMenu(){
+    let jsonData = try! JSONEncoder().encode(menu)
+    let jsonString = String(data: jsonData, encoding: .utf8)!
+    
+    let file = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("menu.json")
+//    let file = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("menu-\(Date()).json")
+    
+    try! jsonString.write(to: file,
+                         atomically: true,
+                         encoding: .utf8)
+}
+
+writeMenu()

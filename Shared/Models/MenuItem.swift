@@ -7,9 +7,16 @@
 
 import Foundation
 
-class MenuItem: NSObject, Identifiable, NSSecureCoding, Codable {
+struct Menu: Codable {
+    var items = [MenuItem]()
+    var date = Date()
+}
 
-    static var supportsSecureCoding: Bool = true
+struct MenuItem: Identifiable, Codable, Hashable, CustomStringConvertible {
+    
+    static func == (lhs: MenuItem, rhs: MenuItem) -> Bool {
+        return lhs.description == rhs.description
+    }
     
     var title = "La Niña Margarita"
     var price:Decimal = 5.00
@@ -39,7 +46,7 @@ class MenuItem: NSObject, Identifiable, NSSecureCoding, Codable {
         coder.encode(orderQty, forKey: "orderQty")
     }
 
-    required init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         title = try values.decode(String.self, forKey: .title)
         price = try values.decode(Decimal.self, forKey: .price)
@@ -50,22 +57,7 @@ class MenuItem: NSObject, Identifiable, NSSecureCoding, Codable {
         orderQty = try values.decode(Int.self, forKey: .orderQty)
     }
     
-    required init?(coder: NSCoder) {
-        self.title = coder.decodeObject(forKey: "title") as! String
-//        self.price = coder.decodeObject(of: Decimal.self, forKey: "price")!
-        self.itemDescription = coder.decodeObject(forKey: "itemDescription") as! String
-        self.size = coder.decodeObject(forKey: "size") as! String
-        self.abv = coder.decodeObject(forKey: "abv") as! String
-        self.imageName = coder.decodeObject(forKey: "imageName") as! String
-        self.orderQty = coder.decodeInteger(forKey: "orderQty")
-    }
-    
-    override init() {
-        super.init()
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        
+    init() {
     }
     
     var id: ObjectIdentifier = ObjectIdentifier(MenuItem.Type.self)

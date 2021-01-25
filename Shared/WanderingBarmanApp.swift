@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+let encoder = JSONEncoder()
+let decoder = JSONDecoder()
+
 @main
 struct WanderingBarmanApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -35,24 +38,27 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let defaults = UserDefaults.standard
     
     func readFromCache(){
-        if let orderData = defaults.object(forKey: currentOrderKey) as? Data,
-           let order = try! NSKeyedUnarchiver.unarchivedObject(ofClass: Order.self, from: orderData) {
+        if let orderData = defaults.object(forKey: "current_order") as? Data,
+           let order = try? decoder.decode(Order.self, from: orderData) {
             Order.currentOrder = order
+            print("decoded order:\n\(String(describing:Order.currentOrder))")
         }
         
-        if let accountData = defaults.object(forKey: accountKey) as? Data,
-           let account = try! NSKeyedUnarchiver.unarchivedObject(ofClass: Account.self, from: accountData){
+        if let accountData = defaults.object(forKey: "account") as? Data,
+           let account = try? decoder.decode(Account.self, from: accountData) {
             Account.current = account
+            print("decoded account:\n\(String(describing:account))")
         }
     }
     
     func writeToCache(){
+        if let encoded = try? encoder.encode(Order.currentOrder) {
+            defaults.set(encoded, forKey: "current_order")
+        }
         
-        let orderData = try! NSKeyedArchiver.archivedData(withRootObject: Order.currentOrder, requiringSecureCoding: false)
-        defaults.set(orderData, forKey: "current_order")
-        
-        let accountData = try! NSKeyedArchiver.archivedData(withRootObject: Account(), requiringSecureCoding: false)
-        defaults.set(accountData, forKey: "account")
+        if let encoded = try? encoder.encode(Account()) {
+            defaults.set(encoded, forKey: "account")
+        }
         
         defaults.synchronize()
     }

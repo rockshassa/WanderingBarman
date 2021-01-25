@@ -8,42 +8,46 @@
 import Foundation
 import Combine
 
-class Order: NSObject, ObservableObject, NSSecureCoding {
-    static var supportsSecureCoding: Bool = true
+class Order: ObservableObject, Codable, CustomStringConvertible {
+    
+    public private(set) var objectWillChange = PassthroughSubject<Void,Never>()
+    @Published var items = [MenuItem]()
     
     var id = randomString()
     
-    @Published var items = [MenuItem]()
-    
-    override init() {
-        super.init()
+    init() {
+        
     }
     
-    required init?(coder: NSCoder) {
-        self.id = coder.decodeObject(forKey: "id") as! String
-        self.items = coder.decodeArrayOfObjects(ofClass: MenuItem.self, forKey: "items")!
+    enum CodingKeys: String, CodingKey {
+        case id
+        case items
     }
     
-    func encode(with coder: NSCoder) {
-        coder.encode(id, forKey: "id")
-        coder.encode(items, forKey: "items")
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        items = try values.decode([MenuItem].self, forKey: .items)
+        id = try values.decode(String.self, forKey: .id)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(items, forKey: .items)
+        try container.encode(id, forKey: .id)
     }
     
     static var currentOrder = Order()
     
     static var dummyOrder:Order {
         let o = Order()
-        let item = MenuItem()
+        var item = MenuItem()
         item.orderQty = 1
         o.items = [item]
         return o
     }
-    
-    public private(set) var objectWillChange = PassthroughSubject<Void,Never>()
 }
 
 extension Order {
-    
     var total:NSDecimalNumber {
         var tot = 0 as NSDecimalNumber
         for item in items {
@@ -53,7 +57,6 @@ extension Order {
     }
     
     var totalString:String? {
-        // We'll force unwrap with the !, if you've got defined data you may need more error checking
         let dec = total as NSDecimalNumber
         let priceString = MenuItem.currencyFormatter.string(from: dec)
         return priceString
