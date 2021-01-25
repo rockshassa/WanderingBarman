@@ -14,10 +14,6 @@ struct Menu: Codable {
 
 struct MenuItem: Identifiable, Codable, Hashable, CustomStringConvertible {
     
-    static func == (lhs: MenuItem, rhs: MenuItem) -> Bool {
-        return lhs.description == rhs.description
-    }
-    
     var title = "La Niña Margarita"
     var price:Decimal = 5.00
     var itemDescription = "An elevated botanical Margarita with marigold & kaffir lime"

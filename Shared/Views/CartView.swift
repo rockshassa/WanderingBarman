@@ -26,7 +26,7 @@ struct CartView: View {
             Text("Your Cart")
             List {
                 ForEach(order.items, id: \.self) { orderItem in
-                    CartItemRow(orderItem)
+                    CartItemRow(orderItem.menuItem)
                 }
                 .onDelete(perform: delete)
             }

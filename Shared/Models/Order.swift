@@ -8,10 +8,28 @@
 import Foundation
 import Combine
 
+class OrderItem: ObservableObject, Codable, CustomStringConvertible, Hashable {
+    static func == (lhs: OrderItem, rhs: OrderItem) -> Bool {
+        return lhs.description == rhs.description
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(menuItem)
+    }
+    
+    let menuItem:MenuItem
+    var quantity:Int
+    
+    init(item:MenuItem, quantity:Int = 1) {
+        self.menuItem = item
+        self.quantity = quantity
+    }
+}
+
 class Order: ObservableObject, Codable, CustomStringConvertible {
     
     public private(set) var objectWillChange = PassthroughSubject<Void,Never>()
-    @Published var items = [MenuItem]()
+    @Published var items = [OrderItem]()
     
     var id = randomString()
     
@@ -26,7 +44,7 @@ class Order: ObservableObject, Codable, CustomStringConvertible {
     
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        items = try values.decode([MenuItem].self, forKey: .items)
+        items = try values.decode([OrderItem].self, forKey: .items)
         id = try values.decode(String.self, forKey: .id)
     }
     
@@ -40,8 +58,7 @@ class Order: ObservableObject, Codable, CustomStringConvertible {
     
     static var dummyOrder:Order {
         let o = Order()
-        var item = MenuItem()
-        item.orderQty = 1
+        let item = OrderItem(item: MenuItem())
         o.items = [item]
         return o
     }
@@ -51,7 +68,7 @@ extension Order {
     var total:NSDecimalNumber {
         var tot = 0 as NSDecimalNumber
         for item in items {
-            tot = tot.adding(NSDecimalNumber(decimal: item.price))
+            tot = tot.adding(NSDecimalNumber(decimal: item.menuItem.price))
         }
         return tot
     }
@@ -63,7 +80,8 @@ extension Order {
     }
     
     func add(_ item:MenuItem){
-        items.append(item)
+        let orderItem = OrderItem(item: item)
+        items.append(orderItem)
         push()
     }
     
@@ -94,7 +112,7 @@ extension Order {
         //Items
         for item in items {
             text.append("\n")
-            text.append("\(item.title) x \(item.orderQty)")
+            text.append("\(item.menuItem.title) x \(item.menuItem.orderQty)")
         }
         text.append("\n")
         text.append("TOTAL: \(totalString!)")
@@ -106,6 +124,8 @@ extension Order {
         return text
     }
 }
+
+
 
 func randomString(length: Int = 16) -> String {
   let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
