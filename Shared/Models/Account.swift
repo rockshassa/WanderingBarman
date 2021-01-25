@@ -16,9 +16,10 @@ extension CustomStringConvertible where Self:Codable {
     }
 }
 
-class Account: Codable, ObservableObject, CustomStringConvertible {
+class Account: UIObservable, Codable, CustomStringConvertible {
     
-    init() {
+    override init() {
+        super.init()
     }
     
     static var current:Account = Account()

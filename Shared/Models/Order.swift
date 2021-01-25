@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class OrderItem: ObservableObject, Codable, CustomStringConvertible, Hashable {
+class OrderItem: UIObservable, Codable, CustomStringConvertible, Hashable {
     static func == (lhs: OrderItem, rhs: OrderItem) -> Bool {
         return lhs.description == rhs.description
     }
@@ -23,18 +23,18 @@ class OrderItem: ObservableObject, Codable, CustomStringConvertible, Hashable {
     init(item:MenuItem, quantity:Int = 1) {
         self.menuItem = item
         self.quantity = quantity
+        super.init()
     }
 }
 
-class Order: ObservableObject, Codable, CustomStringConvertible {
+class Order: UIObservable, Codable, CustomStringConvertible {
     
-    public private(set) var objectWillChange = PassthroughSubject<Void,Never>()
     @Published var items = [OrderItem]()
     
     var id = randomString()
     
-    init() {
-        
+    override init() {
+        super.init()
     }
     
     enum CodingKeys: String, CodingKey {
@@ -64,6 +64,16 @@ class Order: ObservableObject, Codable, CustomStringConvertible {
     }
 }
 
+class UIObservable: ObservableObject {
+    public var objectWillChange = PassthroughSubject<Void,Never>()
+    
+    func push() {
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+        }
+    }
+}
+
 extension Order {
     var total:NSDecimalNumber {
         var tot = 0 as NSDecimalNumber
@@ -83,12 +93,6 @@ extension Order {
         let orderItem = OrderItem(item: item)
         items.append(orderItem)
         push()
-    }
-    
-    func push() {
-        DispatchQueue.main.async {
-            self.objectWillChange.send()
-        }
     }
     
     var orderText:String {
@@ -124,8 +128,6 @@ extension Order {
         return text
     }
 }
-
-
 
 func randomString(length: Int = 16) -> String {
   let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
