@@ -18,12 +18,12 @@ struct SplashView: View {
             Text("FOXHOLE")
                 .multilineTextAlignment(.center)
                 .font(.largeTitle)
-            
+
             Text("drinks to you within the hour\n5-10pm daily\n$30 minimum").italic()
                 .multilineTextAlignment(.center)
                 .padding()
                 .font(.subheadline)
-                
+
             Spacer()
             Button("Enter") {
                 delegate?.splashDismissed = true
@@ -31,9 +31,8 @@ struct SplashView: View {
             Spacer()
         }
     }
-    
-}
 
+}
 
 struct SplashView_Previews: PreviewProvider {
     static var previews: some View {

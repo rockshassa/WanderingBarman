@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct AccountView: View {
-    
-    @ObservedObject var account:Account
-    
-    init(_ account:Account) {
-        self.account = account;
+
+    @ObservedObject var account: Account
+
+    init(_ account: Account) {
+        self.account = account
     }
-    
+
     var body: some View {
-        
+
         GeometryReader { geometry in
             let width = geometry.size.width * 0.4
             HStack {
                 Spacer()
-                VStack() {
+                VStack {
                     Spacer()
                     Image(systemName: "person.fill").resizable()
                         .frame(width: width, height: width)

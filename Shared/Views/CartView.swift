@@ -36,7 +36,7 @@ struct CartView: View {
             .padding(.bottom)
         }
     }
-    
+
     func delete(at offsets: IndexSet) {
         order.items.remove(atOffsets: offsets)
         order.push()
@@ -44,9 +44,9 @@ struct CartView: View {
 }
 
 struct CartItemRow: View {
-    var item:MenuItem
-    
-    init(_ item:MenuItem) {
+    var item: MenuItem
+
+    init(_ item: MenuItem) {
         self.item = item
     }
     var body: some View {
@@ -114,7 +114,7 @@ extension CartView {
         let composeVC = MFMessageComposeViewController()
         composeVC.messageComposeDelegate = messageComposeDelegate
         composeVC.body = order.orderText
-        
+
         vc?.present(composeVC, animated: true)
     }
 }

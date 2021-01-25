@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-var imageSize:CGFloat = 80
+var imageSize: CGFloat = 80
 
-struct ItemRow : View {
-    
-    var item:MenuItem
-    
-    init(_ item:MenuItem) {
+struct ItemRow: View {
+
+    var item: MenuItem
+
+    init(_ item: MenuItem) {
         self.item = item
     }
-    
+
     var body: some View {
         VStack {
             HStack {

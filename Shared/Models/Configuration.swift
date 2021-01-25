@@ -8,7 +8,7 @@
 import Foundation
 
 struct Configuration: Codable {
-    var menu:Menu
-    var hours:String
-    var deliveryDistanceMeters:Int
+    var menu: Menu
+    var hours: String
+    var deliveryDistanceMeters: Int
 }

@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension CustomStringConvertible where Self:Codable {
-    var description:String {
+extension CustomStringConvertible where Self: Codable {
+    var description: String {
         if let encoded = try? encoder.encode(self) {
             return String(decoding: encoded, as: UTF8.self)
         }
@@ -17,13 +17,13 @@ extension CustomStringConvertible where Self:Codable {
 }
 
 class Account: UIObservable, Codable, CustomStringConvertible {
-    
+
     override init() {
         super.init()
     }
-    
-    static var current:Account = Account()
-    
+
+    static var current: Account = Account()
+
     var firstName = "Nick"
     var lastName = "Galasso"
     var phone = "+16092801871"
@@ -32,8 +32,8 @@ class Account: UIObservable, Codable, CustomStringConvertible {
     var addressCity = "Brooklyn"
     var addressState = "NY"
     var addressZip = "11206"
-    
-    var fullName:String {
+
+    var fullName: String {
         return "\(firstName) \(lastName)"
     }
 }

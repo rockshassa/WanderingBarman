@@ -12,15 +12,15 @@ class OrderItem: UIObservable, Codable, CustomStringConvertible, Hashable {
     static func == (lhs: OrderItem, rhs: OrderItem) -> Bool {
         return lhs.description == rhs.description
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(menuItem)
     }
-    
-    let menuItem:MenuItem
-    var quantity:Int
-    
-    init(item:MenuItem, quantity:Int = 1) {
+
+    let menuItem: MenuItem
+    var quantity: Int
+
+    init(item: MenuItem, quantity: Int = 1) {
         self.menuItem = item
         self.quantity = quantity
         super.init()
@@ -28,35 +28,35 @@ class OrderItem: UIObservable, Codable, CustomStringConvertible, Hashable {
 }
 
 class Order: UIObservable, Codable, CustomStringConvertible {
-    
+
     @Published var items = [OrderItem]()
-    
+
     var id = randomString()
-    
+
     override init() {
         super.init()
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case items
     }
-    
+
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         items = try values.decode([OrderItem].self, forKey: .items)
         id = try values.decode(String.self, forKey: .id)
     }
-    
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(items, forKey: .items)
         try container.encode(id, forKey: .id)
     }
-    
+
     static var currentOrder = Order()
-    
-    static var dummyOrder:Order {
+
+    static var dummyOrder: Order {
         let o = Order()
         let item = OrderItem(item: Menu.allItems.first!)
         o.items = [item]
@@ -65,8 +65,8 @@ class Order: UIObservable, Codable, CustomStringConvertible {
 }
 
 class UIObservable: ObservableObject {
-    public var objectWillChange = PassthroughSubject<Void,Never>()
-    
+    public var objectWillChange = PassthroughSubject<Void, Never>()
+
     func push() {
         DispatchQueue.main.async {
             self.objectWillChange.send()
@@ -75,33 +75,33 @@ class UIObservable: ObservableObject {
 }
 
 extension Order {
-    var total:NSDecimalNumber {
+    var total: NSDecimalNumber {
         var tot = 0 as NSDecimalNumber
         for item in items {
             tot = tot.adding(NSDecimalNumber(decimal: item.menuItem.price))
         }
         return tot
     }
-    
-    var totalString:String? {
+
+    var totalString: String? {
         let dec = total as NSDecimalNumber
         let priceString = MenuItem.currencyFormatter.string(from: dec)
         return priceString
     }
-    
-    func add(_ item:MenuItem){
+
+    func add(_ item: MenuItem) {
         let orderItem = OrderItem(item: item)
         items.append(orderItem)
         push()
     }
-    
-    var orderText:String {
-        
+
+    var orderText: String {
+
         let account = Account.current
-        
+
         var text = ""
-        
-        //Deliver to
+
+        // Deliver to
         text.append("Deliver ASAP to:")
         text.append("\n")
         text.append(account.fullName)
@@ -112,24 +112,24 @@ extension Order {
         text.append("\n")
         text.append(account.phone)
         text.append("\n")
-        
-        //Items
+
+        // Items
         for item in items {
             text.append("\n")
             text.append("\(item.menuItem.title) x \(item.quantity)")
         }
         text.append("\n")
         text.append("TOTAL: \(totalString!)")
-        
-        //Order ID
+
+        // Order ID
         text.append("\n")
         text.append("Order ID: \(id)")
-        
+
         return text
     }
 }
 
 func randomString(length: Int = 16) -> String {
   let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-  return String((0..<length).map{ _ in letters.randomElement()! })
+  return String((0..<length).map { _ in letters.randomElement()! })
 }

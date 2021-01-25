@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct RootTabView: View {
-    
-    @ObservedObject var order:Order
-    
-    init(_ order:Order) {
+
+    @ObservedObject var order: Order
+
+    init(_ order: Order) {
         self.order = order
     }
-    
+
     private var badgePosition: CGFloat = 2
     private var tabsCount: CGFloat = 3
-    
+
     var body: some View {
             GeometryReader { geometry in
                 ZStack(alignment: .bottomLeading) {
@@ -27,7 +27,7 @@ struct RootTabView: View {
                         Image(systemName: "list.dash")
                         Text("Menu")
                     }.tag(0)
-                    CartView(order:Order.currentOrder).tabItem {
+                    CartView(order: Order.currentOrder).tabItem {
                         Image(systemName: "cart.fill")
                         Text("Cart")
                     }
@@ -38,7 +38,7 @@ struct RootTabView: View {
                 }
 
                 let itemCount = self.order.items.count
-                    
+
                 // Badge View
                 ZStack {
                   Circle()
@@ -58,7 +58,7 @@ struct RootTabView: View {
 
 struct RootView: View {
     @State var splashDismissed = false
-    
+
     var body: some View {
         if !splashDismissed {
             SplashView(self)
