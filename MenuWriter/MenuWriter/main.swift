@@ -10,14 +10,12 @@ import Foundation
 let encoder = JSONEncoder()
 let decoder = JSONDecoder()
 
-let menu:Menu = {
-    var m = Menu()
-    m.items = [MenuItem()]
-    return m
-}()
-
 func writeMenu(){
-    let jsonData = try! JSONEncoder().encode(menu)
+    encoder.outputFormatting = .prettyPrinted
+    var menu = Menu()
+    menu.date = Date()
+    menu.items = Menu.allItems
+    let jsonData = try! encoder.encode(menu)
     let jsonString = String(data: jsonData, encoding: .utf8)!
     
     let file = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("menu.json")

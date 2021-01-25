@@ -57,7 +57,7 @@ struct CartItemRow: View {
             VStack {
                 Text("\(item.title)")
                     .font(.callout)
-                Text("\(item.priceString!) x \(item.orderQty)")
+                Text("\(item.priceString!) x \(item.quantity)")
             }
         }
     }

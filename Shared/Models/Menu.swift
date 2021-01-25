@@ -11,16 +11,24 @@ struct Menu: Codable {
     var items = [MenuItem]()
     var date = Date()
 }
+extension Menu {
+    static var allItems:[MenuItem] {
+        return [
+            MenuItem(title: "La Niña Margarita", price: 5, description: "An elevated botanical Margarita with marigold & kaffir lime", size: "3.4oz", abv: "18", imageName: "la_nina", imageURL: "")
+        ]
+    }
+}
 
 struct MenuItem: Identifiable, Codable, Hashable, CustomStringConvertible {
     
-    var title = "La Niña Margarita"
-    var price:Decimal = 5.00
-    var itemDescription = "An elevated botanical Margarita with marigold & kaffir lime"
-    var size = "3.4oz"
-    var abv = "18"
-    var imageName = "la_nina"
-    var orderQty:Int = 1
+    let title:String
+    var price:Decimal
+    var itemDescription:String
+    var size:String
+    var abv:String
+    var imageName:String
+    var imageURL:String
+    var quantity:Int
     
     enum CodingKeys: String, CodingKey {
         case title
@@ -28,8 +36,20 @@ struct MenuItem: Identifiable, Codable, Hashable, CustomStringConvertible {
         case itemDescription
         case size
         case abv
-        case orderQty
+        case quantity
         case imageName
+        case imageURL
+    }
+    
+    init(title:String, price:Decimal, description:String, size:String, abv:String, imageName:String, imageURL:String, quantity:Int = 1){
+        self.title = title
+        self.price = price
+        self.itemDescription = description
+        self.size = size
+        self.abv = abv
+        self.imageName = imageName
+        self.imageURL = imageURL
+        self.quantity = quantity
     }
     
     func encode(with coder: NSCoder) {
@@ -39,7 +59,7 @@ struct MenuItem: Identifiable, Codable, Hashable, CustomStringConvertible {
         coder.encode(size, forKey: "size")
         coder.encode(abv, forKey: "abv")
         coder.encode(imageName, forKey: "imageName")
-        coder.encode(orderQty, forKey: "orderQty")
+        coder.encode(quantity, forKey: "quantity")
     }
 
     init(from decoder: Decoder) throws {
@@ -50,10 +70,8 @@ struct MenuItem: Identifiable, Codable, Hashable, CustomStringConvertible {
         size = try values.decode(String.self, forKey: .size)
         abv = try values.decode(String.self, forKey: .abv)
         imageName = try values.decode(String.self, forKey: .imageName)
-        orderQty = try values.decode(Int.self, forKey: .orderQty)
-    }
-    
-    init() {
+        quantity = try values.decode(Int.self, forKey: .quantity)
+        imageURL = try values.decode(String.self, forKey: .imageURL)
     }
     
     var id: ObjectIdentifier = ObjectIdentifier(MenuItem.Type.self)
@@ -68,7 +86,7 @@ struct MenuItem: Identifiable, Codable, Hashable, CustomStringConvertible {
     }()
     
     static var dummyItems:[MenuItem] {
-        return [MenuItem(),MenuItem(),MenuItem(),MenuItem(),MenuItem(),MenuItem(),MenuItem(),MenuItem()]
+        return Menu.allItems
     }
     
     var priceString:String? {

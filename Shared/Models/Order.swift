@@ -58,7 +58,7 @@ class Order: UIObservable, Codable, CustomStringConvertible {
     
     static var dummyOrder:Order {
         let o = Order()
-        let item = OrderItem(item: MenuItem())
+        let item = OrderItem(item: Menu.allItems.first!)
         o.items = [item]
         return o
     }
@@ -116,7 +116,7 @@ extension Order {
         //Items
         for item in items {
             text.append("\n")
-            text.append("\(item.menuItem.title) x \(item.menuItem.orderQty)")
+            text.append("\(item.menuItem.title) x \(item.quantity)")
         }
         text.append("\n")
         text.append("TOTAL: \(totalString!)")
