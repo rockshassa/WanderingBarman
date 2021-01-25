@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23BB814E25BF37A50017187C /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB814D25BF37A50017187C /* Configuration.swift */; };
 		23D203F325B9462F008F8609 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D203F225B9462F008F8609 /* main.swift */; };
 		23D2040225B94980008F8609 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D203FF25B94980008F8609 /* Order.swift */; };
 		23D2040325B94980008F8609 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D2040025B94980008F8609 /* MenuItem.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		23BB814D25BF37A50017187C /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		23D203EF25B9462F008F8609 /* MenuWriter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MenuWriter; sourceTree = BUILT_PRODUCTS_DIR; };
 		23D203F225B9462F008F8609 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		23D203FF25B94980008F8609 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				23D203FF25B94980008F8609 /* Order.swift */,
 				23D2040025B94980008F8609 /* MenuItem.swift */,
 				23D2040125B94980008F8609 /* Account.swift */,
+				23BB814D25BF37A50017187C /* Configuration.swift */,
 			);
 			name = Models;
 			path = ../Shared/Models;
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23D2040325B94980008F8609 /* MenuItem.swift in Sources */,
+				23BB814E25BF37A50017187C /* Configuration.swift in Sources */,
 				23D2040425B94980008F8609 /* Account.swift in Sources */,
 				23D2040225B94980008F8609 /* Order.swift in Sources */,
 				23D203F325B9462F008F8609 /* main.swift in Sources */,

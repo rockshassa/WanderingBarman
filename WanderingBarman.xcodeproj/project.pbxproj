@@ -21,6 +21,7 @@
 		01E9AD8E257A9BA400A57988 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9AD8D257A9BA400A57988 /* AccountView.swift */; };
 		01F4817F25797F1B003F73AE /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F4817E25797F1B003F73AE /* MenuItem.swift */; };
 		01F48185257989E1003F73AE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F48184257989E1003F73AE /* RootView.swift */; };
+		23BB815125BF37BE0017187C /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB815025BF37BE0017187C /* Configuration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		01E9AD8D257A9BA400A57988 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		01F4817E25797F1B003F73AE /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		01F48184257989E1003F73AE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		23BB815025BF37BE0017187C /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		0194850A2579326900293B67 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				23BB815025BF37BE0017187C /* Configuration.swift */,
 				0196F95E25794FD000F83271 /* Order.swift */,
 				01F4817E25797F1B003F73AE /* MenuItem.swift */,
 				01465BF3257A9EE7006AF5BE /* Account.swift */,
@@ -231,6 +234,7 @@
 				019484FC2579310900293B67 /* SplashView.swift in Sources */,
 				01F48185257989E1003F73AE /* RootView.swift in Sources */,
 				01465BF4257A9EE7006AF5BE /* Account.swift in Sources */,
+				23BB815125BF37BE0017187C /* Configuration.swift in Sources */,
 				01E9AD8E257A9BA400A57988 /* AccountView.swift in Sources */,
 				019484FA2579310900293B67 /* WanderingBarmanApp.swift in Sources */,
 				0196F95F25794FD000F83271 /* Order.swift in Sources */,
