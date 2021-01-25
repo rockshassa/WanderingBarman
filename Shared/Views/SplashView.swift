@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SplashView: View {
-    var delegate:RootView?
-    init(_ delegate:RootView? = nil) {
+    var delegate: RootView?
+    init(_ delegate: RootView? = nil) {
         self.delegate = delegate
     }
     var body: some View {

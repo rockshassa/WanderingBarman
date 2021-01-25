@@ -1,0 +1,4 @@
+disabled_rules: 
+   - weak_delegate
+   - line_length
+   - identifier_name

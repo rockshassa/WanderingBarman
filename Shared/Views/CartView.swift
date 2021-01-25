@@ -13,14 +13,14 @@ struct CartView: View {
     private let mailComposeDelegate = MailComposerDelegate()
     private let messageComposeDelegate = MessageComposerDelegate()
 
-    @ObservedObject var order:Order
-    
-    var cartDelegate:Any?
-    
-    init(order:Order) {
+    @ObservedObject var order: Order
+
+    var cartDelegate: Any?
+
+    init(order: Order) {
         self.order = order
     }
-    
+
     var body: some View {
         VStack {
             Text("Your Cart")
