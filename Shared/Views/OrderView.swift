@@ -49,16 +49,28 @@ struct OrderItemRow: View {
     init(_ item: OrderItem) {
         self.item = item
     }
+    
+    let rowHeight:CGFloat = 100
+    
     var body: some View {
-        HStack {
-            Image(item.menuItem.imageName).resizable()
-                .frame(width: imageSize, height: imageSize)
-                .aspectRatio(contentMode: .fit)
-            VStack {
-                Text("\(item.menuItem.title)")
-                    .font(.callout)
-                Text("\(item.menuItem.priceString!) x \(item.quantity)")
-            }
+        let pad:CGFloat = 20
+        VStack {
+            HStack {
+                Text("\(item.quantity) x \(item.menuItem.title)")
+                Spacer()
+                Text("\(item.priceString!)")
+            }.font(.body)
+            HStack {
+                Spacer()
+                    .frame(width: pad)
+                Text("\(item.menuItem.shortDesc)")
+                Spacer()
+                Text("ea \(item.menuItem.priceString!)")
+                    .padding(.trailing, pad)
+                
+            }.font(.caption)
+            .foregroundColor(.gray)
+            
         }
     }
 }

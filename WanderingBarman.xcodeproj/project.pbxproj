@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,7 @@
 		01E9AD8E257A9BA400A57988 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9AD8D257A9BA400A57988 /* AccountView.swift */; };
 		01F4817F25797F1B003F73AE /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F4817E25797F1B003F73AE /* Menu.swift */; };
 		01F48185257989E1003F73AE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F48184257989E1003F73AE /* RootView.swift */; };
+		23095A9E25BF90D400902E19 /* VTabView in Frameworks */ = {isa = PBXBuildFile; productRef = 23095A9D25BF90D400902E19 /* VTabView */; };
 		23BB815125BF37BE0017187C /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB815025BF37BE0017187C /* Configuration.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23095A9E25BF90D400902E19 /* VTabView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +149,9 @@
 			dependencies = (
 			);
 			name = "WanderingBarman (iOS)";
+			packageProductDependencies = (
+				23095A9D25BF90D400902E19 /* VTabView */,
+			);
 			productName = "WanderingBarman (iOS)";
 			productReference = 019484EE2579310900293B67 /* FOXHOLE.app */;
 			productType = "com.apple.product-type.application";
@@ -194,6 +199,9 @@
 				Base,
 			);
 			mainGroup = 019484E12579310600293B67;
+			packageReferences = (
+				23095A9C25BF90D400902E19 /* XCRemoteSwiftPackageReference "SwiftUI-VerticalTabView" */,
+			);
 			productRefGroup = 019484EF2579310900293B67 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -497,6 +505,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		23095A9C25BF90D400902E19 /* XCRemoteSwiftPackageReference "SwiftUI-VerticalTabView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/SwiftUI-VerticalTabView";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		23095A9D25BF90D400902E19 /* VTabView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 23095A9C25BF90D400902E19 /* XCRemoteSwiftPackageReference "SwiftUI-VerticalTabView" */;
+			productName = VTabView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 019484E22579310600293B67 /* Project object */;
 }

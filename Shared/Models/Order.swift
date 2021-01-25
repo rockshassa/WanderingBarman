@@ -25,6 +25,14 @@ class OrderItem: UIObservable, Codable, CustomStringConvertible, Hashable {
         self.quantity = quantity
         super.init()
     }
+    
+    var priceString: String? {
+        let dec = menuItem.price as NSDecimalNumber
+        let qty = NSDecimalNumber(integerLiteral: quantity)
+        let sum = dec.multiplying(by: qty)
+        let priceString = MenuItem.currencyFormatter.string(from: sum)
+        return priceString
+    }
 }
 
 class Order: UIObservable, Codable, CustomStringConvertible {
@@ -58,8 +66,10 @@ class Order: UIObservable, Codable, CustomStringConvertible {
 
     static var dummyOrder: Order {
         let o = Order()
-        let item = OrderItem(item: Menu.allItems.first!)
-        o.items = [item]
+        let orderItems = Menu.allItems.map { (menuItem) -> OrderItem in
+            return OrderItem(item: menuItem, quantity: 2)
+        }
+        o.items = orderItems
         return o
     }
 }
@@ -95,6 +105,7 @@ extension Order {
             match.push()
         } else {
             let orderItem = OrderItem(item: item)
+            orderItem.quantity = item.quantity
             items.append(orderItem)
         }
         push() //dont move this
