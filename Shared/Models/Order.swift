@@ -90,9 +90,14 @@ extension Order {
     }
 
     func add(_ item: MenuItem) {
-        let orderItem = OrderItem(item: item)
-        items.append(orderItem)
-        push()
+        if let match = items.filter({ $0.menuItem.sku == item.sku }).first {
+            match.quantity += item.quantity
+            match.push()
+        } else {
+            let orderItem = OrderItem(item: item)
+            items.append(orderItem)
+            push()
+        }
     }
 
     var orderText: String {
@@ -130,6 +135,6 @@ extension Order {
 }
 
 func randomString(length: Int = 16) -> String {
-  let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-  return String((0..<length).map { _ in letters.randomElement()! })
+    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    return String((0..<length).map { _ in letters.randomElement()! })
 }

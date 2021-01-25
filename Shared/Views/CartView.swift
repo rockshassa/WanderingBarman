@@ -26,7 +26,7 @@ struct CartView: View {
             Text("Your Cart")
             List {
                 ForEach(order.items, id: \.self) { orderItem in
-                    CartItemRow(orderItem.menuItem)
+                    CartItemRow(orderItem)
                 }
                 .onDelete(perform: delete)
             }
@@ -44,20 +44,20 @@ struct CartView: View {
 }
 
 struct CartItemRow: View {
-    var item: MenuItem
+    @ObservedObject var item: OrderItem
 
-    init(_ item: MenuItem) {
+    init(_ item: OrderItem) {
         self.item = item
     }
     var body: some View {
         HStack {
-            Image(item.imageName).resizable()
+            Image(item.menuItem.imageName).resizable()
                 .frame(width: imageSize, height: imageSize)
                 .aspectRatio(contentMode: .fit)
             VStack {
-                Text("\(item.title)")
+                Text("\(item.menuItem.title)")
                     .font(.callout)
-                Text("\(item.priceString!) x \(item.quantity)")
+                Text("\(item.menuItem.priceString!) x \(item.quantity)")
             }
         }
     }
