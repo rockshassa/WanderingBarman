@@ -9,7 +9,7 @@ import SwiftUI
 
 var imageSize: CGFloat = 80
 
-struct ItemRow: View {
+struct MenuItemRow: View {
 
     var item: MenuItem
 
@@ -49,11 +49,13 @@ struct MenuSectionHeader: View {
 }
 
 struct MenuView: View {
+    let dataSource = Menu.allItems
     var body: some View {
         VStack {
             Section(header: MenuSectionHeader()) {
-                List(MenuItem.dummyItems) { item in
-                    ItemRow(item)
+                //item.sku is the unique identifier for the row
+                List(Menu.allItems, id:\.sku) { item in
+                    MenuItemRow(item)
                 }
             }
         }

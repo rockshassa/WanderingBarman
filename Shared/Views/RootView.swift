@@ -21,13 +21,12 @@ struct RootTabView: View {
     var body: some View {
             GeometryReader { geometry in
                 ZStack(alignment: .bottomLeading) {
-                // TabView
                 TabView {
                     MenuView().tabItem {
                         Image(systemName: "list.dash")
                         Text("Menu")
                     }.tag(0)
-                    CartView(order: Order.currentOrder).tabItem {
+                    OrderView(order: Order.currentOrder).tabItem {
                         Image(systemName: "cart.fill")
                         Text("Cart")
                     }
@@ -37,7 +36,7 @@ struct RootTabView: View {
                     }
                 }
 
-                let itemCount = self.order.items.count
+                let itemCount = order.quantityForBadge
 
                 // Badge View
                 ZStack {

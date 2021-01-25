@@ -78,7 +78,7 @@ extension Order {
     var total: NSDecimalNumber {
         var tot = 0 as NSDecimalNumber
         for item in items {
-            tot = tot.adding(NSDecimalNumber(decimal: item.menuItem.price))
+            tot = tot.adding(NSDecimalNumber(decimal: item.menuItem.price * Decimal(item.quantity)))
         }
         return tot
     }
@@ -96,7 +96,13 @@ extension Order {
         } else {
             let orderItem = OrderItem(item: item)
             items.append(orderItem)
-            push()
+        }
+        push() //dont move this
+    }
+    
+    var quantityForBadge: Int {
+        return items.reduce(0) { (result, orderItem) -> Int in
+            return result + orderItem.quantity
         }
     }
 

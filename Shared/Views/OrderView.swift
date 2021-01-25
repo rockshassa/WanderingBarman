@@ -8,7 +8,7 @@
 import SwiftUI
 import MessageUI
 
-struct CartView: View {
+struct OrderView: View {
 
     private let mailComposeDelegate = MailComposerDelegate()
     private let messageComposeDelegate = MessageComposerDelegate()
@@ -26,7 +26,7 @@ struct CartView: View {
             Text("Your Cart")
             List {
                 ForEach(order.items, id: \.self) { orderItem in
-                    CartItemRow(orderItem)
+                    OrderItemRow(orderItem)
                 }
                 .onDelete(perform: delete)
             }
@@ -43,7 +43,7 @@ struct CartView: View {
     }
 }
 
-struct CartItemRow: View {
+struct OrderItemRow: View {
     @ObservedObject var item: OrderItem
 
     init(_ item: OrderItem) {
@@ -63,13 +63,13 @@ struct CartItemRow: View {
     }
 }
 
-struct CartView_Previews: PreviewProvider {
+struct OrderView_Previews: PreviewProvider {
     static var previews: some View {
-        CartView(order: Order.dummyOrder)
+        OrderView(order: Order.dummyOrder)
     }
 }
 
-extension CartView {
+extension OrderView {
 
     private class MailComposerDelegate: NSObject, MFMailComposeViewControllerDelegate {
         func mailComposeController(_ controller: MFMailComposeViewController,
@@ -97,7 +97,7 @@ extension CartView {
 
 // MARK: The message extension
 
-extension CartView {
+extension OrderView {
 
     private class MessageComposerDelegate: NSObject, MFMessageComposeViewControllerDelegate {
         func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
