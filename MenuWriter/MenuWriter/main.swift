@@ -7,8 +7,11 @@
 
 import Foundation
 
+let encoder = JSONEncoder()
+let decoder = JSONDecoder()
+
 let menu:Menu = {
-    let m = Menu()
+    var m = Menu()
     m.items = [MenuItem()]
     return m
 }()
