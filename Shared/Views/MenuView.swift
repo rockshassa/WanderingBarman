@@ -13,7 +13,7 @@ struct MenuView: View {
         VStack {
             Section(header: MenuSectionHeader()) {
                 //item.sku is the unique identifier for the row
-                List(Menu.allItems, id:\.sku) { item in
+                List(dataSource, id:\.self) { item in
                     MenuItemRow(item)
                 }
             }
