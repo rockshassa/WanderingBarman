@@ -8,18 +8,27 @@
 import SwiftUI
 
 struct MenuView: View {
-    let dataSource = Menu.allItems
     var body: some View {
-        VStack {
-            Section(header: MenuSectionHeader()) {
-                //item.sku is the unique identifier for the row
-                List(dataSource, id:\.self) { item in
-                    MenuItemRow(item)
+        NavigationView{
+            VStack {
+                Section(header: MenuSectionHeader()) {
+                    List {
+                        //use ForEach inside list to access BG color
+                        ForEach(Menu.allItems) { item in
+                            NavigationLink(
+                                destination: DetailView(item: item),
+                                label: {
+                                    MenuItemRow(item)
+                                })
+                        }.listRowBackground(Color.black)
+                        
+                    }
                 }
-            }
+            }.navigationBarHidden(true)
         }
     }
 }
+
 struct MenuSectionHeader: View {
     var body: some View {
         VStack {
@@ -40,42 +49,16 @@ struct MenuItemRow: View {
     }
 
     var body: some View {
-        VStack(alignment: .center) {
+        HStack {
+            Image(item.imageName).resizable().aspectRatio(contentMode: .fit).frame(height: 120.0)
             Spacer()
-            HStack(alignment: .center, spacing: 0.0) {
+            VStack(alignment: .center) {
                 Spacer()
-                Image(item.imageName).scaleEffect(1.2).scaledToFill()
+                Text(item.title).bold().font(.headline)
                 Spacer()
-                VStack(alignment: .center, spacing: 15.0) {
-                    Text(item.title).bold().font(.title)
-                    Text("\(item.size) / \(item.abv)% abv").font(.caption)
-                    HStack(alignment: .center, spacing: 20.0) {
-                        Button("-"){
-                            let difference = item.quantity - 1
-                            if difference >= 1 {
-                                item.quantity = difference
-                                item.push()
-                            }
-                        }.buttonStyle(BorderlessButtonStyle())
-                        .font(.largeTitle)
-                        Text("\(item.quantity)")
-                            .font(.title)
-                        Button("+"){
-                            let sum = item.quantity + 1
-                            item.quantity = sum
-                            item.push()
-                        }.buttonStyle(BorderlessButtonStyle())
-                        .font(.largeTitle)
-                    }
-                    Button("Add to Cart") {
-                        Order.currentOrder.add(item)
-                    }.buttonStyle(BorderlessButtonStyle())
-                }
+                Text(item.shortDesc).bold().font(.subheadline)
                 Spacer()
             }
-            Text(item.shortDesc).bold().font(.callout)
-            Spacer()
-            Text(item.longDesc).italic().font(.callout)
             Spacer()
         }
     }

@@ -14,6 +14,7 @@ struct OrderView: View {
     private let messageComposeDelegate = MessageComposerDelegate()
 
     @ObservedObject var order: Order
+    @State private var showingQuantityPicker = false
 
     var cartDelegate: Any?
 
@@ -22,18 +23,28 @@ struct OrderView: View {
     }
 
     var body: some View {
-        VStack {
-            Text("Your Cart")
-            List {
-                ForEach(order.items, id: \.self) { orderItem in
-                    OrderItemRow(orderItem)
+        NavigationView {
+            VStack {
+                Text("Your Cart")
+                List {
+                    ForEach(order.items, id: \.self) { orderItem in
+                        NavigationLink(
+                            destination: DetailView(item: orderItem.menuItem),
+                            label: {
+                                OrderItemRow(orderItem)
+                            })
+                    }
+                    .onDelete(perform: delete)
                 }
-                .onDelete(perform: delete)
+                Button("Continue Shopping"){
+                    
+                }
+                Spacer()
+                Button("Order \(order.totalString ?? "")") {
+                    presentMailCompose()
+                }
+                .padding(.bottom)
             }
-            Button("Order \(order.totalString ?? "")") {
-                presentMailCompose()
-            }
-            .padding(.bottom)
         }
     }
 
@@ -45,7 +56,7 @@ struct OrderView: View {
 
 struct OrderItemRow: View {
     @ObservedObject var item: OrderItem
-
+    
     init(_ item: OrderItem) {
         self.item = item
     }
@@ -70,7 +81,6 @@ struct OrderItemRow: View {
                 
             }.font(.caption)
             .foregroundColor(.gray)
-            
         }
     }
 }

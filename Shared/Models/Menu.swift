@@ -69,7 +69,6 @@ class MenuItem: UIObservable, Identifiable, Codable, CustomStringConvertible, Ha
     let abv: String
     let imageName: String
     let imageURL: String
-    var quantity: Int
 
     enum CodingKeys: String, CodingKey {
         case sku
@@ -81,10 +80,9 @@ class MenuItem: UIObservable, Identifiable, Codable, CustomStringConvertible, Ha
         case abv
         case imageName
         case imageURL
-        case quantity
     }
 
-    init(sku: String, title: String, price: Decimal, shortDesc:String, longDesc: String, size: String, abv: String, imageName: String, imageURL: String = "", quantity: Int = 1) {
+    init(sku: String, title: String, price: Decimal, shortDesc:String, longDesc: String, size: String, abv: String, imageName: String, imageURL: String = "") {
         self.sku = sku
         self.title = title
         self.price = price
@@ -94,10 +92,9 @@ class MenuItem: UIObservable, Identifiable, Codable, CustomStringConvertible, Ha
         self.abv = abv
         self.imageName = imageName
         self.imageURL = imageURL
-        self.quantity = quantity
     }
     
-    var id: ObjectIdentifier = ObjectIdentifier(MenuItem.Type.self)
+    var id = UUID()
 
     static let currencyFormatter: NumberFormatter = {
         let currencyFormatter = NumberFormatter()

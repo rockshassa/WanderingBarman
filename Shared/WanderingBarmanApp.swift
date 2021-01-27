@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 let encoder = JSONEncoder()
 let decoder = JSONDecoder()
@@ -23,9 +24,15 @@ struct WanderingBarmanApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        configureAppearance()
         readFromCache()
         NotificationCenter.default.addObserver(self, selector: #selector(onAppWillBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         return true
+    }
+    
+    func configureAppearance(){
+//        UITableView.appearance().backgroundColor = UIColor.green
+        UITableViewCell.appearance().selectedBackgroundView = UIView() //kill selection color
     }
 
     @objc func onAppWillBackground() {

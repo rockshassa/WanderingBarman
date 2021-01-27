@@ -99,15 +99,33 @@ extension Order {
         return priceString
     }
 
-    func add(_ item: MenuItem) {
-        if let match = items.filter({ $0.menuItem.sku == item.sku }).first {
-            match.quantity += item.quantity
-            match.push()
-        } else {
-            let orderItem = OrderItem(item: item)
-            orderItem.quantity = item.quantity
-            items.append(orderItem)
+    func contains(_ item: MenuItem) -> Bool {
+        if let _ = items.filter({ $0.menuItem.sku == item.sku }).first {
+            return true
         }
+        return false
+    }
+    
+    func quantity(_ item:MenuItem) -> Int {
+        if let match = items.filter({ $0.menuItem.sku == item.sku }).first {
+            return match.quantity
+        }
+        return 1
+    }
+    
+    func add(_ item: MenuItem, quantity:Int) {
+        let orderItem = OrderItem(item: item)
+        orderItem.quantity = quantity
+        items.append(orderItem)
+        push()
+    }
+    
+    func update(_ item: MenuItem, quantity:Int) {
+        guard let match = items.filter({ $0.menuItem.sku == item.sku }).first else {
+            fatalError()
+        }
+        match.quantity = quantity
+        match.push()
         push() //dont move this
     }
     
@@ -138,7 +156,7 @@ extension Order {
         // Items
         for item in items {
             text.append("\n")
-            text.append("\(item.menuItem.title) x \(item.quantity)")
+            text.append("\(item.menuItem.title) x \(item.quantity) @ \(item.menuItem.priceString!) ea")
         }
         text.append("\n")
         text.append("TOTAL: \(totalString!)")
