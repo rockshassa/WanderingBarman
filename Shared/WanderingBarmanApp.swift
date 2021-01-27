@@ -33,6 +33,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func configureAppearance(){
 //        UITableView.appearance().backgroundColor = UIColor.green
         UITableViewCell.appearance().selectedBackgroundView = UIView() //kill selection color
+        UICollectionViewCell.appearance().selectedBackgroundView = UIView()
     }
 
     @objc func onAppWillBackground() {

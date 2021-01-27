@@ -21,7 +21,6 @@ struct MenuView: View {
                                     MenuItemRow(item)
                                 })
                         }.listRowBackground(Color.black)
-                        
                     }
                 }
             }.navigationBarHidden(true)

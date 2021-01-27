@@ -124,8 +124,14 @@ extension Order {
         guard let match = items.filter({ $0.menuItem.sku == item.sku }).first else {
             fatalError()
         }
-        match.quantity = quantity
-        match.push()
+        if quantity > 0 {
+            match.quantity = quantity
+            match.push()
+        } else {
+            items.removeAll { (orderItem) -> Bool in
+                orderItem.menuItem.sku == match.menuItem.sku
+            }
+        }
         push() //dont move this
     }
     

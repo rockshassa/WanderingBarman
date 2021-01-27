@@ -47,9 +47,17 @@ struct AddToCartPicker: View {
             HStack(alignment: .center, spacing: 20.0) {
                 Button("-"){
                     let difference = quantity - 1
-                    if difference >= 1 {
-                        quantity = difference
+                    switch cartUpdateMode {
+                    case .addToCart:
+                        if difference >= 1 {
+                            quantity = difference
+                        }
+                    case .updateCart:
+                        if difference >= 0 {
+                            quantity = difference
+                        }
                     }
+                    
                 }.buttonStyle(BorderlessButtonStyle())
                 .font(.largeTitle)
                 Text("\($quantity.wrappedValue)")

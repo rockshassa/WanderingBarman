@@ -17,23 +17,24 @@ struct RootTabView: View {
 
     private var badgePosition: CGFloat = 2
     private var tabsCount: CGFloat = 3
+    @State var tabSelection = 1
 
     var body: some View {
             GeometryReader { geometry in
                 ZStack(alignment: .bottomLeading) {
-                TabView {
+                TabView(selection: $tabSelection) {
                     MenuView().tabItem {
                         Image(systemName: "list.dash")
                         Text("Menu")
-                    }.tag(0)
-                    OrderView(order: Order.currentOrder).tabItem {
+                    }.tag(1)
+                    OrderView(order: Order.currentOrder, tabSelection: $tabSelection).tabItem {
                         Image(systemName: "cart.fill")
                         Text("Cart")
-                    }
+                    }.tag(2)
                     AccountView(Account.current).tabItem {
                         Image(systemName: "person.fill")
                         Text("Account")
-                    }
+                    }.tag(3)
                 }
 
                 let itemCount = order.quantityForBadge

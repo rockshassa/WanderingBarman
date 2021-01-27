@@ -14,43 +14,58 @@ struct OrderView: View {
     private let messageComposeDelegate = MessageComposerDelegate()
 
     @ObservedObject var order: Order
-    @State private var showingQuantityPicker = false
+    @Binding var tabSelection: Int
 
     var cartDelegate: Any?
-
-    init(order: Order) {
-        self.order = order
-    }
 
     var body: some View {
         NavigationView {
             VStack {
-                Text("Your Cart")
-                List {
-                    ForEach(order.items, id: \.self) { orderItem in
-                        NavigationLink(
-                            destination: DetailView(item: orderItem.menuItem),
-                            label: {
-                                OrderItemRow(orderItem)
-                            })
-                    }
-                    .onDelete(perform: delete)
+                Section(header: Text("Your Cart"), footer: OrderFooter(tabSelection: $tabSelection, parentView: self)) {
+                    List {
+                        ForEach(order.items, id: \.self) { orderItem in
+                            NavigationLink(
+                                destination: DetailView(item: orderItem.menuItem),
+                                label: {
+                                    OrderItemRow(orderItem)
+                                })
+                        }
+                        .onDelete(perform: delete)
+                        .listRowBackground(Color.black)
+                    }.listStyle(PlainListStyle())
                 }
-                Button("Continue Shopping"){
-                    
-                }
-                Spacer()
-                Button("Order \(order.totalString ?? "")") {
-                    presentMailCompose()
-                }
-                .padding(.bottom)
             }
-        }
+        }.navigationBarHidden(true)
     }
 
     func delete(at offsets: IndexSet) {
         order.items.remove(atOffsets: offsets)
         order.push()
+    }
+}
+
+struct OrderFooter: View {
+    @Binding var tabSelection: Int
+    let parentView: OrderView
+    
+    var body: some View {
+        VStack {
+            Button(action: {
+                $tabSelection.wrappedValue = 1
+            }) {
+                HStack {
+                    Image(systemName: "arrowshape.turn.up.left")
+                    Text("Continue Shopping")
+                }
+            }
+            Spacer()
+                .frame(height: 40.0)
+            Button("Order \(parentView.order.totalString ?? "")") {
+                parentView.presentMailCompose()
+            }.font(.title)
+            Spacer()
+                .frame(height: 20.0)
+        }
     }
 }
 
@@ -87,7 +102,7 @@ struct OrderItemRow: View {
 
 struct OrderView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderView(order: Order.dummyOrder)
+        OrderView(order: Order.dummyOrder, tabSelection: .constant(1))
     }
 }
 
@@ -102,7 +117,7 @@ extension OrderView {
         }
     }
     /// Present an mail compose view controller modally in UIKit environment
-    private func presentMailCompose() {
+    func presentMailCompose() {
         guard MFMailComposeViewController.canSendMail() else {
             return
         }
